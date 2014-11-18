@@ -38,7 +38,7 @@ public class Vertex3DList {
 				if(yMin > vertexList.get(i).y)
 					yMin = vertexList.get(i).y;
 				if(zMax < vertexList.get(i).z)
-					zMin = vertexList.get(i).z;
+					zMax = vertexList.get(i).z;
 				if(zMin > vertexList.get(i).z)
 					zMin = vertexList.get(i).z;
 			}
