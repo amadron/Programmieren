@@ -1,30 +1,35 @@
 package graph;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
+	HashMap<V, HashMap<V, Double>> adjencyList;
+	
 	@Override
 	public boolean addVertex(V v) {
-		// TODO Auto-generated method stub
+		adjencyList.put(v, new HashMap<V, Double>());
 		return false;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w) {
-		// TODO Auto-generated method stub
+		adjencyList.get(v).put(w, 1.0);
 		return false;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w, double weight) {
-		// TODO Auto-generated method stub
+		adjencyList.get(v).put(w, weight);
 		return false;
 	}
 
 	@Override
 	public boolean containsVertex(V v) {
-		// TODO Auto-generated method stub
+		if(adjencyList.get(v) != ){
+			return true;
+		}
 		return false;
 	}
 

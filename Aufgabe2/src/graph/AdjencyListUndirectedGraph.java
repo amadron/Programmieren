@@ -1,11 +1,13 @@
 package graph;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
 
 public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	
 	HashMap<V, HashMap<V, Double>> adjencyList;
+	HashMap<V, V> edgeList;
 	
 	@Override
 	public boolean addVertex(V v) {
@@ -15,13 +17,17 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 
 	@Override
 	public boolean addEdge(V v, V w) {
-		adjencyList.put(v, adjencyList.put(w, 1));
+		adjencyList.get(v).put(w, 1.0);
+		adjencyList.get(w).put(v, 1.0);
+		edgeList.put(v, w);
 		return true;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w, double weight) {
 		adjencyList.get(v).put(w, weight);
+		adjencyList.get(w).put(v, weight);
+		edgeList.put(v, w);
 		return true;
 	}
 
@@ -62,7 +68,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 
 	@Override
 	public List getVertexList() {
-		// TODO Auto-generated method stub
+		LinkedList<V> retList = new LinkedList<V>();
 		return null;
 	}
 
