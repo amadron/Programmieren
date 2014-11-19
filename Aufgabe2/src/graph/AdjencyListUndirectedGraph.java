@@ -1,13 +1,15 @@
 package graph;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Set;
 
 public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	
 	HashMap<V, HashMap<V, Double>> adjencyList;
-	HashMap<V, V> edgeList;
+	LinkedList<Edge<V>> edgeList;
 	
 	@Override
 	public boolean addVertex(V v) {
@@ -19,7 +21,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	public boolean addEdge(V v, V w) {
 		adjencyList.get(v).put(w, 1.0);
 		adjencyList.get(w).put(v, 1.0);
-		edgeList.put(v, w);
+		edgeList.add(new Edge<V>(v, w));
 		return true;
 	}
 
@@ -27,7 +29,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	public boolean addEdge(V v, V w, double weight) {
 		adjencyList.get(v).put(w, weight);
 		adjencyList.get(w).put(v, weight);
-		edgeList.put(v, w);
+		edgeList.add(new Edge<V>(v, w, weight));
 		return true;
 	}
 
@@ -61,39 +63,47 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 
 	@Override
 	public int getNumberOfEdges() {
-		int i = 0;
-		
-		return 0;
+		return edgeList.size();
 	}
 
 	@Override
 	public List getVertexList() {
-		LinkedList<V> retList = new LinkedList<V>();
-		return null;
+		LinkedList<V> vertList = new LinkedList<V>();
+		Set<V> set = adjencyList.keySet();
+		for(V it: set) {
+			vertList.add(it);
+		}
+		return vertList;
 	}
 
 	@Override
 	public List getEdgeList() {
-		// TODO Auto-generated method stub
-		return null;
+		return edgeList;
 	}
 
 	@Override
 	public List getAdjacentVertexList(V v) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<V> retList = new LinkedList<V>();
+		Set<V> set = adjencyList.get(v).keySet();
+		for(V it: set){
+			retList.add(it);
+		}
+		return retList;
 	}
 
 	@Override
 	public List getIncidentEdgeList(V v) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Edge<V>> retList = new LinkedList();
+		for(int i = 0; i < edgeList.size(); i++){
+			if(edgeList.get(i).source == v)
+				retList.add(edgeList.get(i));
+		}
+		return retList;
 	}
 
 	@Override
 	public int getDegree(V v) {
-		// TODO Auto-generated method stub
-		return 0;
+		return adjencyList.get(v).size();
 	}
 
 }

@@ -5,7 +5,8 @@ import java.util.List;
 
 public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
-	HashMap<V, HashMap<V, Double>> adjencyList;
+	HashMap<V, HashMap<V, Double>> nextList;
+	HashMap<V, HashMap<V, Double>> prevList;
 	
 	@Override
 	public boolean addVertex(V v) {
