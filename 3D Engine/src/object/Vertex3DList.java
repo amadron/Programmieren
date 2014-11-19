@@ -3,7 +3,7 @@ package object;
 import java.util.List;
 
 public class Vertex3DList {
-	List<Vertex3D> vertexList;
+	public List<Vertex3D> vertexList;
 	
 	public Vertex3DList(List<Vertex3D> list){
 		vertexList = list;

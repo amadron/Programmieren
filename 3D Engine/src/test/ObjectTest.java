@@ -1,4 +1,4 @@
-package Test;
+package test;
 import java.util.LinkedList;
 import object.Vertex3D;
 import object.Vertex3DList;
