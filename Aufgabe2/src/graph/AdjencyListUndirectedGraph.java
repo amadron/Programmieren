@@ -13,9 +13,11 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	
 	@Override
 	public boolean addVertex(V v) {
-		boolean ret = false;
+		if(containsVertex(v) == false){
 		adjencyList.put(v, new HashMap<V, Double>());
-		return ret;
+		return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -70,8 +72,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	@Override
 	public List getVertexList() {
 		LinkedList<V> vertList = new LinkedList<V>();
-		Set<V> set = adjencyList.keySet();
-		for(V it: set) {
+		for(V it: adjencyList.keySet()) {
 			vertList.add(it);
 		}
 		return vertList;
@@ -85,9 +86,10 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	@Override
 	public List getAdjacentVertexList(V v) {
 		LinkedList<V> retList = new LinkedList<V>();
-		Set<V> set = adjencyList.get(v).keySet();
-		for(V it: set){
-			retList.add(it);
+		for(int i = 0; i < edgeList.size(); i++){
+			if(edgeList.get(i).source == v){
+				retList.add(edgeList.get(i).target);
+			}
 		}
 		return retList;
 	}
