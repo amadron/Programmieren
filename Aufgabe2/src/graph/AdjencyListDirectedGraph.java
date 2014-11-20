@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
@@ -10,13 +11,14 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 	
 	@Override
 	public boolean addVertex(V v) {
-		adjencyList.put(v, new HashMap<V, Double>());
+		nextList.put(v, new HashMap<V, Double>());
 		return false;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w) {
-		adjencyList.get(v).put(w, 1.0);
+		nextList.get(v).put(w, 1.0);
+		prevList.get(w).put(v, 1.0);
 		return false;
 	}
 
@@ -48,13 +50,12 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public int getNumberOfVertexes() {
-		// TODO Auto-generated method stub
-		return 0;
+		return nextList.size();
 	}
 
 	@Override
 	public int getNumberOfEdges() {
-		// TODO Auto-generated method stub
+		LinkedList<Edge<V>> edgeList;
 		return 0;
 	}
 

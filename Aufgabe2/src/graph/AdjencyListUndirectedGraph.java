@@ -13,8 +13,9 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	
 	@Override
 	public boolean addVertex(V v) {
+		boolean ret = false;
 		adjencyList.put(v, new HashMap<V, Double>());
-		return true;
+		return ret;
 	}
 
 	@Override
