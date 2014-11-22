@@ -15,23 +15,24 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	public boolean addVertex(V v) {
 		if(containsVertex(v) == false){
 		adjencyList.put(v, new HashMap<V, Double>());
-		return true;
+			return true;
 		}
-		return false;
+			return false;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w) {
-		if(containsVertex(v) == false && containsVertex(w)){
+		if(!containsVertex(v) || !containsVertex(w)){
 			throw new IllegalArgumentException("Einer der Vertexes ist nicht enthalten");
 		}
 		if(v == w){
 			throw new IllegalArgumentException("Beide Knoten sind gleich!");
 		}
+		boolean ret = containsEdge(v, w);
 		adjencyList.get(v).put(w, 1.0);
 		adjencyList.get(w).put(v, 1.0);
 		edgeList.add(new Edge<V>(v, w));
-		return true;
+		return ret;
 	}
 
 	@Override
@@ -42,16 +43,17 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 		if(v == w){
 			throw new IllegalArgumentException("Beide Knoten sind gleich!");
 		}
+		boolean ret = containsEdge(v, w);
 		adjencyList.get(v).put(w, weight);
 		adjencyList.get(w).put(v, weight);
 		edgeList.add(new Edge<V>(v, w, weight));
-		return true;
+		return ret;
 	}
 
 	@Override
 	public boolean containsVertex(V v) {
 		if(adjencyList.get(v) != null){
-		return true;
+			return true;
 		} else {
 			return false;
 		}
@@ -59,17 +61,26 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 
 	@Override
 	public boolean containsEdge(V v, V w) {
+		if(!containsVertex(v) || !containsVertex(w)){
+			throw new IllegalArgumentException("Einer der Knoten nicht enthalten");
+		}
 		boolean ret = false;
 		for(int i = 0; i < edgeList.size(); i++)
 			if(edgeList.get(i).source == v && edgeList.get(i).target == w){
 				ret = true;
 			}
-		return ret; //	
+		return ret;	
 	}
 
 	@Override
-	public double getWeight(Object v, Object w) {
-		return adjencyList.get(v).get(w);
+	public double getWeight(V v, V w) {
+		if(!containsVertex(v) || !containsVertex(w)){
+			throw new IllegalArgumentException("Einer der Knoten nicht enthalten");
+		}
+		if(containsEdge(v, w)){
+			return adjencyList.get(v).get(w);
+		} else
+			return 0;
 	}
 
 	@Override
@@ -98,6 +109,9 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 
 	@Override
 	public List getAdjacentVertexList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<V> retList = new LinkedList<V>();
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).source == v){
@@ -109,6 +123,9 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 
 	@Override
 	public List getIncidentEdgeList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<Edge<V>> retList = new LinkedList();
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).source == v)

@@ -15,14 +15,14 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 	public boolean addVertex(V v) {
 		if(containsVertex(v) == false){
 		nextList.put(v, new HashMap<V, Double>());
-		return true;
+			return true;
 		} else
-		return false;
+			return false;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w) {
-		if(containsVertex(v) == false && containsVertex(w)){
+		if(!containsVertex(v) || !containsVertex(w)){
 			throw new IllegalArgumentException("Einer der Vertexes ist nicht enthalten");
 		}
 		if(v == w){
@@ -37,7 +37,7 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public boolean addEdge(V v, V w, double weight) {
-		if(containsVertex(v) == false && containsVertex(w)){
+		if(!containsVertex(v) || !containsVertex(w)){
 			throw new IllegalArgumentException("Einer der Vertexes ist nicht enthalten");
 		}
 		if(v == w){
@@ -55,11 +55,14 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 		if(nextList.get(v) != null){
 			return true;
 		} else
-		return false;
+			return false;
 	}
 
 	@Override
 	public boolean containsEdge(V v, V w) {
+		if(!containsVertex(v) || !containsVertex(w)){
+			throw new IllegalArgumentException("Einer der Knoten nicht enthalten");
+		}
 		boolean ret = false;
 		for(int i = 0; i < edgeList.size(); i++)
 			if(edgeList.get(i).source == v && edgeList.get(i).target == w){
@@ -70,6 +73,9 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public double getWeight(V v, V w) {
+		if(!containsVertex(v) || !containsVertex(w)){
+			throw new IllegalArgumentException("Einer der Knoten nicht enthalten");
+		}
 		if(containsEdge(v,w))
 			return nextList.get(v).get(w);
 		else
@@ -103,6 +109,9 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public List getAdjacentVertexList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<V> retList = new LinkedList<V>();
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).source == v){
@@ -124,6 +133,9 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public int getInDegree(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		int count = 0;
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).target == v){
@@ -135,6 +147,9 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public int getOutDegree(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		int count = 0;
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).source == v){
@@ -146,6 +161,9 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public List getPredecessorVertexList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<V> retList = new LinkedList<V>();
 		for(V it : prevList.get(v).keySet()){
 			retList.add(it);
@@ -154,7 +172,10 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 	}
 
 	@Override
-	public List getSuccessorVertexList(Object v) {
+	public List getSuccessorVertexList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<V> retList = new LinkedList<V>();
 		for(V it : nextList.get(v).keySet()){
 			retList.add(it);
@@ -163,7 +184,10 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 	}
 
 	@Override
-	public List getOutgoingEdgeList(Object v) {
+	public List getOutgoingEdgeList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<Edge<V>> retList = new LinkedList<Edge<V>>();
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).source == v){
@@ -174,7 +198,10 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 	}
 
 	@Override
-	public List getIncomingEdgeList(Object v) {
+	public List getIncomingEdgeList(V v) {
+		if(!containsVertex(v)){
+			throw new IllegalArgumentException("Knoten nicht enthalten");
+		}
 		LinkedList<Edge<V>> retList = new LinkedList<Edge<V>>();
 		for(int i = 0; i < edgeList.size(); i++){
 			if(edgeList.get(i).target == v){
