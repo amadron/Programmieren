@@ -22,16 +22,32 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public boolean addEdge(V v, V w) {
+		if(containsVertex(v) == false && containsVertex(w)){
+			throw new IllegalArgumentException("Einer der Vertexes ist nicht enthalten");
+		}
+		if(v == w){
+			throw new IllegalArgumentException("Beide Knoten sind gleich!");
+		}
+		boolean ret = containsEdge(v, w);
 		nextList.get(v).put(w, 1.0);
-		return false;
+		prevList.get(w).put(v, 1.0);
+		edgeList.add(new Edge<V>(v, w, 1.0));
+		return ret;
 	}
 
 	@Override
 	public boolean addEdge(V v, V w, double weight) {
+		if(containsVertex(v) == false && containsVertex(w)){
+			throw new IllegalArgumentException("Einer der Vertexes ist nicht enthalten");
+		}
+		if(v == w){
+			throw new IllegalArgumentException("Beide Knoten sind gleich!");
+		}
+		boolean ret = containsEdge(v, w);
 		nextList.get(v).put(w, weight);
 		prevList.get(w).put(v, weight);
 		edgeList.add(new Edge<V>(v,w,weight));
-		return false;
+		return ret;
 	}
 
 	@Override
@@ -44,15 +60,20 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
 	@Override
 	public boolean containsEdge(V v, V w) {
-		if(nextList.get(v).get(w) != null){
-			return true;
-		} else 
-		return false;
+		boolean ret = false;
+		for(int i = 0; i < edgeList.size(); i++)
+			if(edgeList.get(i).source == v && edgeList.get(i).target == w){
+				ret = true;
+			}
+		return ret;		
 	}
 
 	@Override
 	public double getWeight(V v, V w) {
-		return nextList.get(v).get(w);
+		if(containsEdge(v,w))
+			return nextList.get(v).get(w);
+		else
+			return 0; //
 	}
 
 	@Override
