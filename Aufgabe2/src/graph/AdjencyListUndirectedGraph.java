@@ -1,10 +1,8 @@
 package graph;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.Set;
 
 public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	
@@ -32,6 +30,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 		adjencyList.get(v).put(w, 1.0);
 		adjencyList.get(w).put(v, 1.0);
 		edgeList.add(new Edge<V>(v, w));
+		edgeList.add(new Edge<V>(w, v));
 		return ret;
 	}
 
@@ -47,6 +46,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 		adjencyList.get(v).put(w, weight);
 		adjencyList.get(w).put(v, weight);
 		edgeList.add(new Edge<V>(v, w, weight));
+		edgeList.add(new Edge<V>(w, v, weight));
 		return ret;
 	}
 
