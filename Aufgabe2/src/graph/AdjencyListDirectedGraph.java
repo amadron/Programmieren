@@ -30,7 +30,7 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 		}
 		boolean ret = containsEdge(v, w);
 		nextList.get(v).put(w, 1.0);
-		prevList.get(w).put(v, 1.0);
+		nextList.get(w).put(v, 1.0);
 		edgeList.add(new Edge<V>(v, w, 1.0));
 		return ret;
 	}
@@ -45,7 +45,7 @@ public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 		}
 		boolean ret = containsEdge(v, w);
 		nextList.get(v).put(w, weight);
-		prevList.get(w).put(v, weight);
+		nextList.get(w).put(v, weight);
 		edgeList.add(new Edge<V>(v,w,weight));
 		return ret;
 	}

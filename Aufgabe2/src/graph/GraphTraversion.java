@@ -1,8 +1,10 @@
 package graph;
 import java.util.AbstractSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -61,9 +63,33 @@ public class GraphTraversion<V> {
 	//returns topological Sort of directed graph as a List
 	public List<V> topologicalSort(DirectedGraph<V> g){
 		List<V> ts;
-		int inDegree;
-		Queue<V> q;
+		Map<V, Integer> inDegree = new HashMap<V, Integer>();
+		Queue<V> q = new LinkedList<V>();
+		List<Edge<V>> edgeList = g.getEdgeList();
+		
 		List<V> vertexList = g.getVertexList();
-		return vertexList;
+		for(int i = 0; i < vertexList.size(); i++)
+		{
+			V vertex = vertexList.get(i);
+			inDegree.put(vertex, g.getInDegree(vertex));
+			if(g.getInDegree(vertex)==0){
+				q.add(vertex);
+			}
+		}
+		
+		while(!q.isEmpty()){
+			V v = q.remove();
+			ts.add(v);
+			List<V> list = g.getAdjacentVertexList(v);
+			for(;;){
+				
+			}
+		}
+		if(ts.size() != g.getNumberOfVertexes()){
+			return null;
+		}
+		else {
+			return ts;
+		}
 	}
 }
