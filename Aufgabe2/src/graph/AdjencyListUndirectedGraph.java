@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	
-	HashMap<V, HashMap<V, Double>> adjencyList;
-	LinkedList<Edge<V>> edgeList;
+	HashMap<V, HashMap<V, Double>> adjencyList = new HashMap<V, HashMap<V,Double>>();
+	LinkedList<Edge<V>> edgeList = new LinkedList<Edge<V>>();
 	
 	@Override
 	public boolean addVertex(V v) {

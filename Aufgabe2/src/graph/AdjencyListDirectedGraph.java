@@ -7,13 +7,13 @@ import java.util.Set;
 
 public class AdjencyListDirectedGraph<V> implements DirectedGraph<V> {
 
-	HashMap<V, HashMap<V, Double>> nextList;
-	HashMap<V, HashMap<V, Double>> prevList;
-	LinkedList<Edge<V>> edgeList;
+	HashMap<V, HashMap<V, Double>> nextList = new HashMap<V, HashMap<V, Double>>();
+	HashMap<V, HashMap<V, Double>> prevList = new HashMap<V, HashMap<V, Double>>();
+	LinkedList<Edge<V>> edgeList = new LinkedList<Edge<V>>();
 	
 	@Override
 	public boolean addVertex(V v) {
-		if(containsVertex(v) == false){
+		if(!containsVertex(v)){
 		nextList.put(v, new HashMap<V, Double>());
 			return true;
 		} else
