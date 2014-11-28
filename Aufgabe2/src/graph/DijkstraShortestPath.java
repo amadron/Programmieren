@@ -1,7 +1,5 @@
-package scottlandYard;
+package graph;
 import java.util.List;
-
-import graph.Graph;
 
 public class DijkstraShortestPath<V> {
 	public void DijkstraShortestPath(Graph<V> g){

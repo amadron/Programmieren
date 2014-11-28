@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
 
 public class GraphTraversion<V> {
 	//returns a List of the depth of node s
@@ -62,27 +63,29 @@ public class GraphTraversion<V> {
 	
 	//returns topological Sort of directed graph as a List
 	public List<V> topologicalSort(DirectedGraph<V> g){
-		List<V> ts;
+		List<V> ts = new LinkedList<V>();
 		Map<V, Integer> inDegree = new HashMap<V, Integer>();
 		Queue<V> q = new LinkedList<V>();
-		List<Edge<V>> edgeList = g.getEdgeList();
 		
 		List<V> vertexList = g.getVertexList();
 		for(int i = 0; i < vertexList.size(); i++)
 		{
-			V vertex = vertexList.get(i);
-			inDegree.put(vertex, g.getInDegree(vertex));
-			if(g.getInDegree(vertex)==0){
-				q.add(vertex);
+			V vertex = vertexList.get(i);				 //Temporary Vertex
+			inDegree.put(vertex, g.getInDegree(vertex)); //put the inDegree of every Vertex in a list
+			if(g.getInDegree(vertex)==0){				//Check if the Vertex has no previous connection
+				
+				q.add(vertex);							//If the Vertex has no Connection, put it on the queue
 			}
 		}
 		
 		while(!q.isEmpty()){
 			V v = q.remove();
 			ts.add(v);
-			List<V> list = g.getAdjacentVertexList(v);
-			for(;;){
-				
+			List<V> list = g.getAdjacentVertexList(v);			//Get the next Vertexes of the Current Vertex in a List
+			for(int i = 0; i < list.size(); i++){				//For every of the nex Vertex:
+				inDegree.put(list.get(i), inDegree.get(list.get(i))-1);	//Dekrement the amount of previous Vertexes of the next Vertex
+				if(inDegree.get(list.get(i)) == 0)
+					q.add(list.get(i));
 			}
 		}
 		if(ts.size() != g.getNumberOfVertexes()){
