@@ -94,7 +94,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	}
 
 	@Override
-	public List getVertexList() {
+	public List<V> getVertexList() {
 		LinkedList<V> vertList = new LinkedList<V>();
 		for(V it: adjencyList.keySet()) {
 			vertList.add(it);
@@ -103,12 +103,12 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	}
 
 	@Override
-	public List getEdgeList() {
+	public List<Edge<V>> getEdgeList() {
 		return edgeList;
 	}
 
 	@Override
-	public List getAdjacentVertexList(V v) {
+	public List<V> getAdjacentVertexList(V v) {
 		if(!containsVertex(v)){
 			throw new IllegalArgumentException("Knoten nicht enthalten");
 		}
@@ -122,7 +122,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 	}
 
 	@Override
-	public List getIncidentEdgeList(V v) {
+	public List<Edge<V>> getIncidentEdgeList(V v) {
 		if(!containsVertex(v)){
 			throw new IllegalArgumentException("Knoten nicht enthalten");
 		}
