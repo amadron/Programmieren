@@ -16,7 +16,7 @@ import sim.SYSimulation;
 public class TaxiDrive {
 	
 	public static void main(String[] args){
-		File f = new File("/home/benni/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
 		AdjencyListUndirectedGraph<Integer> taxiGraph = Fileread("Taxi", f);
 		GraphTraversion<Integer> gTrav = new GraphTraversion<Integer>();
 		System.out.println(taxiGraph.getVertexList());
@@ -64,12 +64,12 @@ public class TaxiDrive {
 				sim2.visitStation(taxiDepth.get(i));
 				visitedDepth.add(taxiDepth.get(i));
 			}
-			List<Integer> nextDepthList = taxiGraph.getAdjacentVertexList(taxiBreadth.get(i));
+			List<Integer> nextDepthList = taxiGraph.getAdjacentVertexList(taxiDepth.get(i));
 			for(int j = 0; j < nextDepthList.size(); j++){
 				sim2.drive(taxiDepth.get(i), nextDepthList.get(j), Color.BLACK);
 				if(!visitedDepth.contains(nextDepthList.get(j))){
 					sim2.visitStation(nextDepthList.get(j));
-					visitedDepth.add(nextDepthList.get(j));
+					//visitedDepth.add(nextDepthList.get(j));
 				}
 			}
 		}
