@@ -73,7 +73,6 @@ public class GraphTraversion<V> {
 			V vertex = vertexList.get(i);				 //Temporary Vertex
 			inDegree.put(vertex, g.getInDegree(vertex)); //put the inDegree of every Vertex in a list
 			if(g.getInDegree(vertex)==0){				//Check if the Vertex has no previous connection
-				
 				q.add(vertex);							//If the Vertex has no Connection, put it on the queue
 			}
 		}

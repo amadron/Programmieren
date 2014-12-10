@@ -60,10 +60,10 @@ public class Test {
 		System.out.println("Topologische Sortierung Bsp S. 3-40:" + gTrav.topologicalSort(topBsp));
 		
 		DirectedGraph<String> anziehen = new AdjencyListDirectedGraph<String>();
+		anziehen.addVertex("Unterhemd");
 		anziehen.addVertex("Unterhose");
 		anziehen.addVertex("Strümpfe");
 		anziehen.addVertex("Schuhe");
-		anziehen.addVertex("Unterhemd");
 		anziehen.addVertex("Hose");
 		anziehen.addVertex("Hemd");
 		anziehen.addVertex("Gürtel");
@@ -72,18 +72,19 @@ public class Test {
 		anziehen.addVertex("Handschuhe");
 		anziehen.addVertex("Mütze");
 		anziehen.addVertex("Schal");
-		anziehen.addEdge("Unterhemd", "Unterhose");
-		anziehen.addEdge("Handschuhe", "Schal");
-		anziehen.addEdge("Unterhose", "Strümpfe");
+		anziehen.addEdge("Unterhemd", "Hemd");
+		anziehen.addEdge("Unterhose", "Hemd");
 		anziehen.addEdge("Strümpfe", "Hemd");
 		anziehen.addEdge("Hemd", "Hose");
+		anziehen.addEdge("Hose", "Schuhe");
 		anziehen.addEdge("Hose", "Gürtel");
-		anziehen.addEdge("Gürtel", "Pullover");
-		anziehen.addEdge("Pullover", "Schuhe");
+		anziehen.addEdge("Hose", "Pullover");
 		anziehen.addEdge("Schuhe", "Mantel");
+		anziehen.addEdge("Gürtel", "Mantel");
+		anziehen.addEdge("Pullover", "Mantel");
+		anziehen.addEdge("Mantel", "Schal");
 		anziehen.addEdge("Mantel", "Handschuhe");
-		anziehen.addEdge("Schal", "Mütze");
-		
+		anziehen.addEdge("Mantel", "Mütze");
 		
 		System.out.println("Topologische Sortierung Anziehen: " + sTrav.topologicalSort(anziehen));
 		
