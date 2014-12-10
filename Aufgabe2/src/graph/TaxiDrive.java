@@ -8,72 +8,41 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Random;
 
 import sim.SYSimulation;
 
-public class TaxiDrive {
+import java.util.Collections;
+
+public class TaxiDrive<V> {
+	
+	
+	public static Random random = new Random();
+	public static Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 	
 	public static void main(String[] args){
-		File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
-		AdjencyListUndirectedGraph<Integer> taxiGraph = Fileread("Taxi", f);
-		GraphTraversion<Integer> gTrav = new GraphTraversion<Integer>();
-		System.out.println(taxiGraph.getVertexList());
-		List<Integer> taxiBreadth = gTrav.breadthFirstSearch(taxiGraph, taxiGraph.getVertexList().get(0));
-		System.out.println(taxiBreadth);
-		List<Integer> taxiDepth = gTrav.depthFirstSearch(taxiGraph, taxiGraph.getVertexList().get(0));
-		System.out.println(taxiDepth);
 		
-		/*SYSimulation sim1;
+		//File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		File f = new File("/home/benedict/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		AdjencyListUndirectedGraph<Integer> taxiGraph = Fileread("Taxi", f);
+		System.out.println(taxiGraph.getVertexList());
+		
+		
+		SYSimulation sim1;
 		try {
 			sim1 = new SYSimulation();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
 		}
-		sim1.startSequence("BreitenSuche");
-		LinkedList<Integer> visitedBreadth = new LinkedList<Integer>();
-		for(int i = 0; i < taxiBreadth.size(); i++){
-			if(!visitedBreadth.contains(taxiBreadth.get(i))){
-				sim1.visitStation(taxiBreadth.get(i));
-				visitedBreadth.add(taxiBreadth.get(i));
-			}
-			List<Integer> nextList = taxiGraph.getAdjacentVertexList(taxiBreadth.get(i));
-			for(int j = 0; j < nextList.size(); j++){
-				sim1.drive(taxiBreadth.get(i), nextList.get(j), Color.BLUE);
-				if(!visitedBreadth.contains(nextList.get(j))){
-					sim1.visitStation(nextList.get(j));
-					visitedBreadth.add(nextList.get(j));
-				}
-			} 
 		
-		sim1.stopSequence(); */
+		//List<Integer> taxiDepth = depthFirstSearch(taxiGraph, 1, sim1);
+		List<Integer> taxiBreath = breadthFirstSearchAnim(taxiGraph, 1, sim1);
 		
-		SYSimulation sim2;
-		try {
-			sim2 = new SYSimulation();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		sim2.startSequence("Tiefensuche");
-		LinkedList<Integer> visitedDepth = new LinkedList<Integer>();
-		for(int i = 0; i < taxiDepth.size(); i++){
-			if(!visitedDepth.contains(taxiDepth.get(i))){
-				sim2.visitStation(taxiDepth.get(i));
-				visitedDepth.add(taxiDepth.get(i));
-			}
-			List<Integer> nextDepthList = taxiGraph.getAdjacentVertexList(taxiDepth.get(i));
-			for(int j = 0; j < nextDepthList.size(); j++){
-				sim2.drive(taxiDepth.get(i), nextDepthList.get(j), Color.BLACK);
-				if(!visitedDepth.contains(nextDepthList.get(j))){
-					sim2.visitStation(nextDepthList.get(j));
-					//visitedDepth.add(nextDepthList.get(j));
-				}
-			}
-		}
-		sim2.stopSequence();
 	}
 	
 	public static AdjencyListUndirectedGraph<Integer> Fileread(String param, File f){
@@ -99,5 +68,54 @@ public class TaxiDrive {
 		}
 		
 		return graph;
+	}
+	
+	public static List<Integer> depthFirstSearch(Graph<Integer> g, Integer s, SYSimulation sim){
+		sim.startSequence("Tiefensuche"); 
+		List<Integer> visitList = new LinkedList<>();
+		color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+		depthFirstSearchR(s, g, visitList, sim, s);
+		sim.stopSequence();
+		return visitList;
+	}
+	
+	private static void depthFirstSearchR(Integer s, Graph<Integer> g, List<Integer> visitList, SYSimulation sim, Integer vorg){
+		visitList.add(s);
+		sim.drive(vorg, s, color);
+		sim.visitStation(s, color);
+		List<Integer> adjList = g.getAdjacentVertexList(s);
+		
+		for(Integer vert : adjList){
+			if(!visitList.contains(vert)){
+				depthFirstSearchR(vert, g, visitList, sim, s);
+			}
+		}
+		color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+	}
+	
+	public static List<Integer> breadthFirstSearchAnim(Graph<Integer> g, Integer s, SYSimulation sim){
+		sim.startSequence("Tiefensuche");
+		List<Integer> visitList = new LinkedList<>();
+		Queue<Integer> vQueue = new LinkedList<>();
+		vQueue.add(s);
+		
+		while(!vQueue.isEmpty()){
+			Integer v = vQueue.remove();
+			
+			visitList.add(v);
+			
+			List<Integer> adjList =  g.getAdjacentVertexList(v);
+			for(Integer vert : adjList){
+				if(!visitList.contains(vert)){
+					sim.drive( v, vert, color);
+					vQueue.add(vert);
+					visitList.add(vert);
+					sim.visitStation(vert, color);
+				}
+			}
+			color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+		}
+		sim.stopSequence();
+		return visitList;
 	}
 }

@@ -112,13 +112,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 		if(!containsVertex(v)){
 			throw new IllegalArgumentException("Knoten nicht enthalten");
 		}
-		LinkedList<V> retList = new LinkedList<V>();
-		for(int i = 0; i < edgeList.size(); i++){
-			if(edgeList.get(i).source == v){
-				retList.add(edgeList.get(i).target);
-			}
-		}
-		return retList;
+		return new LinkedList<V>(adjencyList.get(v).keySet());
 	}
 
 	@Override

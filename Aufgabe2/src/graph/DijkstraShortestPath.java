@@ -71,6 +71,7 @@ public class DijkstraShortestPath<V> {
 					}
 				}
 			}
+			distance = d.get(g);
 			return target;
 		} else {
 			System.out.println("Bitte zuerst initialisieren");
@@ -81,7 +82,10 @@ public class DijkstraShortestPath<V> {
 	
 	public List<V> getShortestPath(){
 		LinkedList<V> shortestPath = new LinkedList<V>();
-		
+		for(int i = 0; i < d.size(); i++){
+			
+		}
+		return shortestPath;		
 	}
 	
 	public double getDistance(){
