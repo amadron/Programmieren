@@ -4,13 +4,34 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import sim.SYSimulation;
 
 public class DijkstraTest {
 	
 	public static void main(String[] args){
-		
+		File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		Graph<Integer> scotlandGraph = Fileread(f);
+		DijkstraShortestPath<Integer> dijkstra = new DijkstraShortestPath<>();
+		dijkstra.DijkstraShortestPath(scotlandGraph);
+		dijkstra.searchShortestPath(20, 160);
+		List<Integer> shortList = dijkstra.getShortestPath();
+		SYSimulation sim1;
+		try {
+			sim1 = new SYSimulation();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		int last = shortList.get(0);
+		for(int st : shortList){
+			sim1.visitStation(st);
+			sim1.drive(st, last);
+		}
+		System.out.println("Entfernung: " + dijkstra.getDistance());
 	}
 	
 	public static AdjencyListUndirectedGraph<Integer> Fileread(File f){

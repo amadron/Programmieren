@@ -100,6 +100,7 @@ public class AdjencyListUndirectedGraph<V> implements UndirectedGraph<V> {
 			vertList.add(it);
 		}
 		return vertList;
+		//return new LinkedList<V>(adjencyList.keySet());
 	}
 
 	@Override

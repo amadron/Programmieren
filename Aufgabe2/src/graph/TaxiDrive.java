@@ -21,13 +21,11 @@ import java.util.Collections;
 public class TaxiDrive<V> {
 	
 	
-	public static Random random = new Random();
-	public static Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 	
 	public static void main(String[] args){
 		
-		//File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
-		File f = new File("/home/benedict/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		//File f = new File("/home/benedict/git/Programmieren/Aufgabe2/ScotlandYard.txt");
 		AdjencyListUndirectedGraph<Integer> taxiGraph = Fileread("Taxi", f);
 		System.out.println(taxiGraph.getVertexList());
 		
@@ -73,7 +71,6 @@ public class TaxiDrive<V> {
 	public static List<Integer> depthFirstSearch(Graph<Integer> g, Integer s, SYSimulation sim){
 		sim.startSequence("Tiefensuche"); 
 		List<Integer> visitList = new LinkedList<>();
-		color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 		depthFirstSearchR(s, g, visitList, sim, s);
 		sim.stopSequence();
 		return visitList;
@@ -81,8 +78,8 @@ public class TaxiDrive<V> {
 	
 	private static void depthFirstSearchR(Integer s, Graph<Integer> g, List<Integer> visitList, SYSimulation sim, Integer vorg){
 		visitList.add(s);
-		sim.drive(vorg, s, color);
-		sim.visitStation(s, color);
+		sim.drive(vorg, s);
+		sim.visitStation(s);
 		List<Integer> adjList = g.getAdjacentVertexList(s);
 		
 		for(Integer vert : adjList){
@@ -90,7 +87,6 @@ public class TaxiDrive<V> {
 				depthFirstSearchR(vert, g, visitList, sim, s);
 			}
 		}
-		color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 	}
 	
 	public static List<Integer> breadthFirstSearchAnim(Graph<Integer> g, Integer s, SYSimulation sim){
@@ -98,7 +94,7 @@ public class TaxiDrive<V> {
 		List<Integer> visitList = new LinkedList<>();
 		Queue<Integer> vQueue = new LinkedList<>();
 		vQueue.add(s);
-		
+		sim.visitStation(s);
 		while(!vQueue.isEmpty()){
 			Integer v = vQueue.remove();
 			
@@ -107,13 +103,12 @@ public class TaxiDrive<V> {
 			List<Integer> adjList =  g.getAdjacentVertexList(v);
 			for(Integer vert : adjList){
 				if(!visitList.contains(vert)){
-					sim.drive( v, vert, color);
+					sim.drive( v, vert);
 					vQueue.add(vert);
 					visitList.add(vert);
-					sim.visitStation(vert, color);
+					sim.visitStation(vert);
 				}
 			}
-			color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 		}
 		sim.stopSequence();
 		return visitList;

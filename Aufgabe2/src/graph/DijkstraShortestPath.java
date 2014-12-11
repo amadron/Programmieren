@@ -2,6 +2,7 @@ package graph;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class DijkstraShortestPath<V> {
 	private HashMap<V, Double> d = new HashMap<V, Double>(); //Distanz
@@ -82,8 +83,9 @@ public class DijkstraShortestPath<V> {
 	
 	public List<V> getShortestPath(){
 		LinkedList<V> shortestPath = new LinkedList<V>();
-		for(int i = 0; i < d.size(); i++){
-			
+		Set<V> vertList = p.keySet();
+		for(V vert : vertList){
+			shortestPath.add(vert);
 		}
 		return shortestPath;		
 	}

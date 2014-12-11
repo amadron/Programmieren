@@ -1,5 +1,6 @@
 package graph;
 import java.util.AbstractSet;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -15,9 +16,10 @@ public class GraphTraversion<V> {
 	//returns a List of the depth of node s
 	public static <V> List<V> depthFirstSearch(Graph<V> g, V s){
 		List<V> visitList = new LinkedList<V>();
-		Stack<V> stk = new Stack<V>();
+		//Stack<V> stk = new Stack<V>();
+		Deque<V> stk = new LinkedList<V>();
 		stk.push(s);
-		while(!stk.empty()){
+		while(!stk.isEmpty()){
 			V v = stk.pop();
 			if(visitList.contains(v)){
 				continue;
@@ -77,12 +79,11 @@ public class GraphTraversion<V> {
 		
 		while(!q.isEmpty()){
 			V v = q.remove();
-			ts.add(v);
-			List<V> list = g.getAdjacentVertexList(v);						//Get the next Vertexes of the Current Vertex in a List
-			for(int i = 0; i < list.size(); i++){							//For every of the next Vertex:
-				inDegree.put(list.get(i), inDegree.get(list.get(i))-1);		//Dekrement the amount of previous Vertexes of the next Vertex
-				if(inDegree.get(list.get(i)) == 0)
-					q.add(list.get(i));
+			ts.add(v);					
+			for(V w : g.getAdjacentVertexList(v)){							//For every of the next Vertex:
+				inDegree.put(w, inDegree.get(w)-1);		//Dekrement the amount of previous Vertexes of the next Vertex
+				if(inDegree.get(w) == 0)
+					q.add(w);
 			}
 		}
 		if(ts.size() != g.getNumberOfVertexes()){
