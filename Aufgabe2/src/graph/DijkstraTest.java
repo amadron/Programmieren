@@ -13,12 +13,14 @@ import sim.SYSimulation;
 public class DijkstraTest {
 	
 	public static void main(String[] args){
-		File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		//File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		File f = new File("/home/benni/git/Programmieren/Aufgabe2/ScotlandYard.txt");
 		Graph<Integer> scotlandGraph = Fileread(f);
 		DijkstraShortestPath<Integer> dijkstra = new DijkstraShortestPath<>();
 		dijkstra.DijkstraShortestPath(scotlandGraph);
-		dijkstra.searchShortestPath(20, 160);
+		dijkstra.searchShortestPath(9, 20);
 		List<Integer> shortList = dijkstra.getShortestPath();
+		System.out.println(shortList);
 		SYSimulation sim1;
 		try {
 			sim1 = new SYSimulation();
@@ -26,11 +28,14 @@ public class DijkstraTest {
 			e.printStackTrace();
 			return;
 		}
+		sim1.startSequence("Dijkstrashortest path");
 		int last = shortList.get(0);
 		for(int st : shortList){
 			sim1.visitStation(st);
 			sim1.drive(st, last);
+			last = st;
 		}
+		sim1.stopSequence();
 		System.out.println("Entfernung: " + dijkstra.getDistance());
 	}
 	

@@ -26,49 +26,38 @@ public class DijkstraShortestPath<V> {
 		if(initialised == true){
 			boolean target = false;
 			LinkedList<V> kl = new LinkedList<V>();
-			List<Edge<V>> edgeList = G.getEdgeList();
 			
 			d.put(s, 0.0);
 			kl.add(s);
-			
-			while(!kl.isEmpty()|| target == false){
+			while(!kl.isEmpty() || target == false){
+				// Knoten v aus kl mit d[v] minimal
 				V v = kl.get(0);
+				if(v == g){
+					target = true;
+					break;
+				}
 				int index = 0;
-				for (int i = 0; i < kl.size(); i++){
-					if(d.get(kl.get(i)) < d.get(v))
-					{
-						v = kl.get(i);
+				for(int i = 0; i < kl.size(); i++){
+					if(d.get(kl.get(i)) < d.get(v)){
 						index = i;
+						v = kl.get(i);
 					}
 				}
 				kl.remove(index);
-								
-				double weight = G.getIncidentEdgeList(v).get(0).weight;
-				for(Edge<V> edge: G.getIncidentEdgeList(v)){
-					if(edge.weight < weight)
-						weight = edge.weight;
-				}
-				
-				List<V> adjaList = G.getAdjacentVertexList(v);
-				for(V w: adjaList){
-					if(w == g){
-						target = true;
-						distance = d.get(g);
-						break;
-					}
-					Edge c = null;
-					for(Edge e: edgeList)
-					{
-						if(e.source == v && e.target == w){
-							c = e;
-						}
-					}
-					if(d.get(w) == Double.POSITIVE_INFINITY){
+				System.out.println(v);
+				for(V w : G.getAdjacentVertexList(v)){
+					if(d.get(w)== Double.POSITIVE_INFINITY){
 						kl.add(w);
 					}
+					Edge<V> c = null;
+					for(Edge<V> E: G.getIncidentEdgeList(v)){
+						if(E.target == w){
+							 c = E;
+						}	
+					}
 					if((d.get(v) + c.weight) < d.get(w)){
-						p.put(v, w);
-						d.put(v, c.weight);
+						p.put(w, v);
+						d.put(w, d.get(v) + c.weight);
 					}
 				}
 			}
@@ -83,11 +72,12 @@ public class DijkstraShortestPath<V> {
 	
 	public List<V> getShortestPath(){
 		LinkedList<V> shortestPath = new LinkedList<V>();
-		Set<V> vertList = p.keySet();
-		for(V vert : vertList){
-			shortestPath.add(vert);
+		Set<V> set = p.keySet();
+		for(V vert : p.keySet()){
+			if(p.get(vert) != null)
+				shortestPath.add(vert);
 		}
-		return shortestPath;		
+		return shortestPath;
 	}
 	
 	public double getDistance(){
