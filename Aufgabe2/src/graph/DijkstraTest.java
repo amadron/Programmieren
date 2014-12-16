@@ -13,14 +13,14 @@ import sim.SYSimulation;
 public class DijkstraTest {
 	
 	public static void main(String[] args){
-		//File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
-		File f = new File("/home/benni/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		File f = new File("/rzhome/beroth/git/Programmieren/Aufgabe2/ScotlandYard.txt");
+		//File f = new File("/home/benni/git/Programmieren/Aufgabe2/ScotlandYard.txt");
 		Graph<Integer> scotlandGraph = Fileread(f);
 		DijkstraShortestPath<Integer> dijkstra = new DijkstraShortestPath<>();
 		dijkstra.DijkstraShortestPath(scotlandGraph);
-		dijkstra.searchShortestPath(9, 20);
+		dijkstra.searchShortestPath(1, 58);
 		List<Integer> shortList = dijkstra.getShortestPath();
-		System.out.println(shortList);
+		System.out.println("ShortList: " + shortList);
 		SYSimulation sim1;
 		try {
 			sim1 = new SYSimulation();
