@@ -1,8 +1,8 @@
 
 
 public class TelVerbindung {
-	TelKnoten u;
-	TelKnoten v;
+	public TelKnoten u;
+	public TelKnoten v;
 	
 	public TelVerbindung(TelKnoten u, TelKnoten v){
 		this.u = u;

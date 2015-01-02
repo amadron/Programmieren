@@ -1,6 +1,6 @@
 
 public class UnionFind {
-	int p[];
+	public int p[];
 	/* Legt eine neue Union-Find-struktur
 	 * mit der Partition {{1},{2},...,{n}} an */
 	public UnionFind(int n){
@@ -43,7 +43,7 @@ public class UnionFind {
 			else 
 				p[e2] = e1;
 		} else {
-			System.out.println("Beide Knoten gleich!");
+			System.out.println("union: Beide Knoten gleich!");
 		}
 	}
 	

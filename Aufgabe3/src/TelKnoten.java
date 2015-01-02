@@ -1,7 +1,7 @@
 
 public class TelKnoten {
-	private int x;
-	private int y;
+	public int x;
+	public int y;
 	
 	public TelKnoten(int x, int y){
 		this.x = x;
