@@ -1,22 +1,15 @@
 package graph;
-import graph.AdjencyListUndirectedGraph;
-
-import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import sim.SYSimulation;
-
-import java.util.Collections;
 
 public class TaxiDrive<V> {
 	
